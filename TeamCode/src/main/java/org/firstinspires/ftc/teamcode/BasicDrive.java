@@ -8,8 +8,8 @@ public class BasicDrive extends OpMode {
 
     private RobotHardware robot;
 
-    public static double DRIVE_SPEED_MULTIPLIER = 0.6;
-    public static double TURN_SPEED_MULTIPLIER = 0.7;
+    public static double DRIVE_SPEED_MULTIPLIER = 0.35;
+    public static double TURN_SPEED_MULTIPLIER = 0.5;
 
     @Override
     public void init() {
@@ -18,8 +18,8 @@ public class BasicDrive extends OpMode {
 
     @Override
     public void loop() {
-        double drive = gamepad1.left_stick_x;
-        double strafe = gamepad1.left_stick_y;
+        double drive = gamepad1.left_stick_y;
+        double strafe = gamepad1.left_stick_x;
         double rotate = gamepad1.right_stick_x;
 
         robot.drive(drive, strafe, rotate * TURN_SPEED_MULTIPLIER, (gamepad1.x ? 1 : DRIVE_SPEED_MULTIPLIER));

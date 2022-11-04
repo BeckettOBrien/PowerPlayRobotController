@@ -23,9 +23,9 @@ public class RobotHardware {
         frontRightDrive = hardwareMap.get(DcMotor.class, "frd");
 
         backLeftDrive.setDirection(DcMotorSimple.Direction.FORWARD);
-        backRightDrive.setDirection(DcMotorSimple.Direction.FORWARD);
+        backRightDrive.setDirection(DcMotorSimple.Direction.REVERSE);
         frontLeftDrive.setDirection(DcMotorSimple.Direction.FORWARD);
-        frontRightDrive.setDirection(DcMotorSimple.Direction.FORWARD);
+        frontRightDrive.setDirection(DcMotorSimple.Direction.REVERSE);
 
         backLeftDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         backRightDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
@@ -57,10 +57,10 @@ public class RobotHardware {
     }
 
     public void drive(double drive, double strafe, double rotate, double speed) {
-        final double blPower = speed * (drive + rotate - strafe);
-        final double brPower = speed * (drive - rotate + strafe);
-        final double flPower = speed * (drive + rotate + strafe);
-        final double frPower = speed * (drive - rotate - strafe);
+        final double blPower = speed * (drive - rotate + strafe);
+        final double brPower = speed * (drive + rotate - strafe);
+        final double flPower = speed * (drive - rotate - strafe);
+        final double frPower = speed * (drive + rotate + strafe);
         drivePower(blPower, brPower, flPower, frPower);
     }
 
