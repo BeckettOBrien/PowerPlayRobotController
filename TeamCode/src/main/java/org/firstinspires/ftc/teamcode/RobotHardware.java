@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.Range;
 
 public class RobotHardware {
@@ -14,6 +15,11 @@ public class RobotHardware {
     DcMotor frontLeftDrive;
     DcMotor frontRightDrive;
 
+    DcMotor armLift;
+
+    Servo armRotate;
+    Servo clawGrab;
+
     RobotHardware(HardwareMap hardwareMap) {
         this.hardwareMap = hardwareMap;
 
@@ -22,15 +28,24 @@ public class RobotHardware {
         frontLeftDrive = hardwareMap.get(DcMotor.class, "fld");
         frontRightDrive = hardwareMap.get(DcMotor.class, "frd");
 
+        armLift = hardwareMap.get(DcMotor.class, "al");
+
+        armRotate = hardwareMap.get(Servo.class, "ar");
+        clawGrab = hardwareMap.get(Servo.class, "cg");
+
         backLeftDrive.setDirection(DcMotorSimple.Direction.FORWARD);
         backRightDrive.setDirection(DcMotorSimple.Direction.REVERSE);
         frontLeftDrive.setDirection(DcMotorSimple.Direction.FORWARD);
         frontRightDrive.setDirection(DcMotorSimple.Direction.REVERSE);
 
+        armLift.setDirection(DcMotorSimple.Direction.FORWARD);
+
         backLeftDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         backRightDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         frontLeftDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         frontRightDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+
+        armLift.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
         resetDriveEncoders();
     }
@@ -66,6 +81,18 @@ public class RobotHardware {
 
     public void brake() {
         drivePower(0, 0, 0, 0);
+    }
+
+    public void armLiftPower(double power) {
+        armLift.setPower(power);
+    }
+
+    public void rotateArm(double to) {
+        armRotate.setPosition(to);
+    }
+
+    public void grabClaw(double to) {
+        clawGrab.setPosition(to);
     }
 
     public final void sleep(long milliseconds) {
