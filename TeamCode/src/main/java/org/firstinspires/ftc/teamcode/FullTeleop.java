@@ -1,20 +1,15 @@
 package org.firstinspires.ftc.teamcode;
 
-import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
-@TeleOp(name="Util", group="Iterative Opmode")
-@Config
-public class Utilities extends OpMode {
+@TeleOp(name="Full Teleop", group="Iterative Opmode")
+public class FullTeleop extends OpMode {
 
     private RobotHardware robot;
 
     public static double DRIVE_SPEED_MULTIPLIER = 0.3;
     public static double TURN_SPEED_MULTIPLIER = 0.5;
-
-    public static double ARM_SERVO_POSITION = 0.0;
-    public static double CLAW_SERVO_POSITION = 0.0;
 
     @Override
     public void init() {
@@ -30,7 +25,18 @@ public class Utilities extends OpMode {
         robot.drive(drive, strafe, rotate * TURN_SPEED_MULTIPLIER, (gamepad1.x ? 1 : DRIVE_SPEED_MULTIPLIER));
         robot.armLiftPower(gamepad1.right_trigger - gamepad1.left_trigger);
 
-        robot.rotateArm(ARM_SERVO_POSITION);
-        robot.clawGrab.setPosition(CLAW_SERVO_POSITION);
+        if (gamepad1.a) {
+            robot.grabClaw();
+        }
+        if (gamepad1.b) {
+            robot.releaseClaw();
+        }
+
+        if (gamepad1.left_bumper) {
+            robot.rotateArm(RobotHardware.ARM_FORWARD);
+        }
+        if (gamepad1.right_bumper) {
+            robot.rotateArm(RobotHardware.ARM_BACKWARD);
+        }
     }
 }

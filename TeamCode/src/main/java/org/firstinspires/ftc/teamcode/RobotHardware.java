@@ -1,12 +1,20 @@
 package org.firstinspires.ftc.teamcode;
 
+import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.Range;
 
+@Config
 public class RobotHardware {
+
+    public static double ARM_FORWARD = 0.04;
+    public static double ARM_BACKWARD = 0.73;
+
+    public static double CLAW_OPEN = 0.42;
+    public static double CLAW_CLOSED = 0.65;
 
     HardwareMap hardwareMap;
 
@@ -72,10 +80,10 @@ public class RobotHardware {
     }
 
     public void drive(double drive, double strafe, double rotate, double speed) {
-        final double blPower = speed * (drive - rotate + strafe);
-        final double brPower = speed * (drive + rotate - strafe);
-        final double flPower = speed * (drive - rotate - strafe);
-        final double frPower = speed * (drive + rotate + strafe);
+        final double blPower = speed * (drive - rotate - strafe);
+        final double brPower = speed * (drive + rotate + strafe);
+        final double flPower = speed * (drive - rotate + strafe);
+        final double frPower = speed * (drive + rotate - strafe);
         drivePower(blPower, brPower, flPower, frPower);
     }
 
@@ -91,8 +99,12 @@ public class RobotHardware {
         armRotate.setPosition(to);
     }
 
-    public void grabClaw(double to) {
-        clawGrab.setPosition(to);
+    public void grabClaw() {
+        clawGrab.setPosition(CLAW_CLOSED);
+    }
+
+    public void releaseClaw() {
+        clawGrab.setPosition(CLAW_OPEN);
     }
 
     public final void sleep(long milliseconds) {
