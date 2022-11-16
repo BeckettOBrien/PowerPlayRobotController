@@ -18,24 +18,24 @@ public class FullTeleop extends OpMode {
 
     @Override
     public void loop() {
-        double drive = gamepad1.dpad_up ? 1 : gamepad1.dpad_down ? -1 : 0;
-        double strafe = gamepad1.dpad_right ? 1 : gamepad1.dpad_left ? -1 : 0;
+        double drive = gamepad1.dpad_up ? 1 : gamepad1.dpad_down ? -1 : gamepad1.left_stick_y;
+        double strafe = gamepad1.dpad_right ? 1 : gamepad1.dpad_left ? -1 :gamepad1.left_stick_x;
         double rotate = gamepad1.right_stick_x;
 
         robot.drive(drive, strafe, rotate * TURN_SPEED_MULTIPLIER, (gamepad1.x ? 1 : DRIVE_SPEED_MULTIPLIER));
         robot.armLiftPower(gamepad1.right_trigger - gamepad1.left_trigger);
 
-        if (gamepad1.a) {
+        if (gamepad2.a) {
             robot.grabClaw();
         }
-        if (gamepad1.b) {
+        if (gamepad2.b) {
             robot.releaseClaw();
         }
 
-        if (gamepad1.left_bumper) {
+        if (gamepad2.left_bumper) {
             robot.rotateArm(RobotHardware.ARM_FORWARD);
         }
-        if (gamepad1.right_bumper) {
+        if (gamepad2.right_bumper) {
             robot.rotateArm(RobotHardware.ARM_BACKWARD);
         }
     }
