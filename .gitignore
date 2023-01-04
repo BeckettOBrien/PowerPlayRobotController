@@ -86,3 +86,6 @@ lint/generated/
 lint/outputs/
 lint/tmp/
 # lint/reports/
+
+# EOCV Simulator Files
+TeamCode/src/main/java/org/firstinspires/ftc/teamcode/util/vision/sim/
