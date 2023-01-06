@@ -1,8 +1,10 @@
 package org.firstinspires.ftc.teamcode;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
+@Disabled
 @TeleOp(name="Basic Drive", group="Iterative Opmode")
 public class BasicDrive extends OpMode {
 
@@ -23,6 +25,6 @@ public class BasicDrive extends OpMode {
         double rotate = gamepad1.right_stick_x;
 
         robot.drive(drive, strafe, rotate * TURN_SPEED_MULTIPLIER, (gamepad1.x ? 1 : DRIVE_SPEED_MULTIPLIER));
-        robot.armLiftPower(gamepad1.right_trigger - gamepad1.left_trigger);
+//        robot.armLiftPower(gamepad1.right_trigger - gamepad1.left_trigger);
     }
 }
