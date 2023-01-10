@@ -21,7 +21,7 @@ public class SignalSleeveDetector {
     OpenCvCamera camera;
     SignalSleevePipeline pipeline;
 
-    public SignalSleeveDetector(HardwareMap hw, double xOffset) {
+    public SignalSleeveDetector(HardwareMap hw) {
         int cameraMonitorViewId = hw.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hw.appContext.getPackageName());
         camera = OpenCvCameraFactory.getInstance().createWebcam(hw.get(WebcamName.class, "Webcam 1"), cameraMonitorViewId);
         camera.openCameraDevice();
@@ -40,13 +40,20 @@ public class SignalSleeveDetector {
         camera.closeCameraDeviceAsync(() -> {});
     }
 
+    enum PARK_ZONE {
+        LEFT, MIDDLE, RIGHT;
+    }
+
+    public PARK_ZONE getDeterminedZone() {
+        return pipeline.currentZone;
+    }
+
 }
 
 @Config
 class SignalSleevePipeline extends OpenCvPipeline {
 
-    public static int COLOR_BOUND_LOW = 5;
-    public static int COLOR_BOUND_HIGH = 20;
+    public SignalSleeveDetector.PARK_ZONE currentZone;
 
     double roix1 = 500;
     double roiy1 = 200;
@@ -55,10 +62,10 @@ class SignalSleevePipeline extends OpenCvPipeline {
 
     Scalar lowPurple = new Scalar(150, 85, 125);
     Scalar highPurple = new Scalar(175, 255, 255);
-    Scalar lowGreen = new Scalar(COLOR_BOUND_LOW, 0, 100);
-    Scalar highGreen = new Scalar(COLOR_BOUND_HIGH, 255, 255);
-    Scalar lowOrange = new Scalar(COLOR_BOUND_LOW, 0, 100);
-    Scalar highOrange = new Scalar(COLOR_BOUND_HIGH, 255, 255);
+    Scalar lowGreen = new Scalar(40, 85, 125);
+    Scalar highGreen = new Scalar(80, 255, 255);
+    Scalar lowOrange = new Scalar(10, 85, 125);
+    Scalar highOrange = new Scalar(30, 255, 255);
 
     Mat mat = new Mat();
     Rect ROI;
@@ -97,20 +104,21 @@ class SignalSleevePipeline extends OpenCvPipeline {
 
 //        input.copyTo(out);
 
-        // Draw ROI rectangles
+        // Determine color and draw ROI rectangle
+        // TODO: Update zones for correct colors
         Scalar rectColor = new Scalar(255, 255, 255);
         double max = Math.max(Math.max(purpleValue, greenValue), orangeValue);
         if (max == purpleValue) {
+            currentZone = SignalSleeveDetector.PARK_ZONE.LEFT;
             rectColor = new Scalar(255, 0, 255);
         } else if (max == greenValue) {
+            currentZone = SignalSleeveDetector.PARK_ZONE.MIDDLE;
             rectColor = new Scalar(0, 255, 0);
         } else if (max == orangeValue) {
+            currentZone = SignalSleeveDetector.PARK_ZONE.RIGHT;
             rectColor = new Scalar(255, 150, 0);
         }
-//        Scalar foundColor = new Scalar(0, 255, 0);
         Imgproc.rectangle(out, ROI, rectColor);
-//        Imgproc.rectangle(mat, LEFT_ROI, (currentLoc == OpenCVElementTracker.LOCATION.LEFT) ? foundColor : emptyColor);
-//        Imgproc.rectangle(mat, RIGHT_ROI, (currentLoc == OpenCVElementTracker.LOCATION.RIGHT) ? foundColor : emptyColor);
 
         return out;
     }
@@ -120,9 +128,5 @@ class SignalSleevePipeline extends OpenCvPipeline {
         super.onViewportTapped();
         showGrayscale = !showGrayscale;
     }
-
-//    public OpenCVElementTracker.LOCATION getLocation() {
-//        return currentLoc;
-//    }
 
 }
