@@ -40,7 +40,7 @@ public class SignalSleeveDetector {
         camera.closeCameraDeviceAsync(() -> {});
     }
 
-    enum PARK_ZONE {
+    public enum PARK_ZONE {
         LEFT, MIDDLE, RIGHT;
     }
 
