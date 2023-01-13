@@ -26,12 +26,12 @@ public class RobotHardware {
     DcMotor frontLeftDrive;
     DcMotor frontRightDrive;
 
-    DcMotor armLift;
+    public DcMotor armLift;
 
-    Servo armRotate;
-    Servo clawGrab;
+    public Servo armRotate;
+    public Servo clawGrab;
 
-    RobotHardware(HardwareMap hardwareMap) {
+    public RobotHardware(HardwareMap hardwareMap) {
         this.hardwareMap = hardwareMap;
 
         backLeftDrive = hardwareMap.get(DcMotor.class, "bld");
