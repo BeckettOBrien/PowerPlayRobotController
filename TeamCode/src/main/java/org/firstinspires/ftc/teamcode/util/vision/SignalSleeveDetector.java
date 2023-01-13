@@ -41,7 +41,7 @@ public class SignalSleeveDetector {
     }
 
     public enum PARK_ZONE {
-        LEFT, MIDDLE, RIGHT;
+        LEFT, MIDDLE, RIGHT
     }
 
     public PARK_ZONE getDeterminedZone() {
