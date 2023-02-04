@@ -1,32 +1,34 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.acmerobotics.dashboard.config.Config;
-import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.Range;
 
+import java.util.Arrays;
+import java.util.List;
+
 @Config
 public class RobotHardware {
 
-    public static double ARM_FORWARD = 0.05;
-    public static double ARM_BACKWARD = 0.74;
+    public static double ARM_FORWARD = 0.22;
+    public static double ARM_BACKWARD = 0.95;
 
-    public static double CLAW_OPEN = 0.2;
-    public static double CLAW_CLOSED = 0.46;
+    public static double CLAW_OPEN = 0.1;
+    public static double CLAW_CLOSED = 0.25;
 
     public static double ARM_SPEED_MULTIPLIER = 0.85;
     public static int MAX_LIFT_HEIGHT = 2100;
 
     HardwareMap hardwareMap;
 
-    DcMotor backLeftDrive;
-    DcMotor backRightDrive;
-    DcMotor frontLeftDrive;
-    DcMotor frontRightDrive;
+    public DcMotorEx backLeftDrive;
+    public DcMotorEx backRightDrive;
+    public DcMotorEx frontLeftDrive;
+    public DcMotorEx frontRightDrive;
 
-    public DcMotor armLift;
+    public DcMotorEx armLift;
 
     public Servo armRotate;
     public Servo clawGrab;
@@ -34,29 +36,29 @@ public class RobotHardware {
     public RobotHardware(HardwareMap hardwareMap) {
         this.hardwareMap = hardwareMap;
 
-        backLeftDrive = hardwareMap.get(DcMotor.class, "bld");
-        backRightDrive = hardwareMap.get(DcMotor.class, "brd");
-        frontLeftDrive = hardwareMap.get(DcMotor.class, "fld");
-        frontRightDrive = hardwareMap.get(DcMotor.class, "frd");
+        backLeftDrive = hardwareMap.get(DcMotorEx.class, "bld");
+        backRightDrive = hardwareMap.get(DcMotorEx.class, "brd");
+        frontLeftDrive = hardwareMap.get(DcMotorEx.class, "fld");
+        frontRightDrive = hardwareMap.get(DcMotorEx.class, "frd");
 
-        armLift = hardwareMap.get(DcMotor.class, "al");
+        armLift = hardwareMap.get(DcMotorEx.class, "al");
 
         armRotate = hardwareMap.get(Servo.class, "ar");
         clawGrab = hardwareMap.get(Servo.class, "cg");
 
-        backLeftDrive.setDirection(DcMotorSimple.Direction.FORWARD);
-        backRightDrive.setDirection(DcMotorSimple.Direction.REVERSE);
-        frontLeftDrive.setDirection(DcMotorSimple.Direction.FORWARD);
-        frontRightDrive.setDirection(DcMotorSimple.Direction.REVERSE);
+        backLeftDrive.setDirection(DcMotorEx.Direction.FORWARD);
+        backRightDrive.setDirection(DcMotorEx.Direction.REVERSE);
+        frontLeftDrive.setDirection(DcMotorEx.Direction.FORWARD);
+        frontRightDrive.setDirection(DcMotorEx.Direction.REVERSE);
 
-        armLift.setDirection(DcMotorSimple.Direction.REVERSE);
+        armLift.setDirection(DcMotorEx.Direction.REVERSE);
 
-        backLeftDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        backRightDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        frontLeftDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        frontRightDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        backLeftDrive.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
+        backRightDrive.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
+        frontLeftDrive.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
+        frontRightDrive.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
 
-        armLift.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        armLift.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
 
         resetEncoders();
     }
@@ -64,18 +66,18 @@ public class RobotHardware {
     public void resetEncoders() {
         brake();
 
-        backLeftDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        backRightDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        frontLeftDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        frontRightDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        backLeftDrive.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
+        backRightDrive.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
+        frontLeftDrive.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
+        frontRightDrive.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
 
-        backLeftDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        backRightDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        frontLeftDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        frontRightDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        backLeftDrive.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
+        backRightDrive.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
+        frontLeftDrive.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
+        frontRightDrive.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
 
-        armLift.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        armLift.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        armLift.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
+        armLift.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
     }
 
     public void drivePower(double blPower, double brPower, double flPower, double frPower) {
@@ -99,16 +101,16 @@ public class RobotHardware {
 
 //    public void armLiftPower(double power) {
 //        if (power > 0) {
-//            armLift.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+//            armLift.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
 //            armLift.setPower(power);
 //        } else if (power < 0) {
-//            armLower.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+//            armLower.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
 //            armLower.setPower(power);
-//            armLift.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+//            armLift.setMode(DcMotorEx.RunMode.RUN_WITHOUT_ENCODER);
 //            armLift.setPower(-power/8);
-//        } else if (armLift.getMode() != DcMotor.RunMode.RUN_TO_POSITION) {
+//        } else if (armLift.getMode() != DcMotorEx.RunMode.RUN_TO_POSITION) {
 //            armLift.setTargetPosition(armLift.getCurrentPosition());
-//            armLift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+//            armLift.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
 //            armLift.setPower(0.2);
 //        } else {
 //            armLower.setPower(0);
@@ -116,9 +118,9 @@ public class RobotHardware {
 //    }
 
 //    public void armLowerPower(double power) {
-//        armLower.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+//        armLower.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
 //        armLower.setPower(power);
-//        armLift.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+//        armLift.setMode(DcMotorEx.RunMode.RUN_WITHOUT_ENCODER);
 //        armLift.setPower(power/2);
 //    }
 
