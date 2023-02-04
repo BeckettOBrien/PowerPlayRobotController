@@ -1,7 +1,5 @@
 package org.firstinspires.ftc.teamcode.opmode;
 
-import android.drm.DrmStore;
-
 import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
@@ -14,37 +12,41 @@ import org.firstinspires.ftc.teamcode.util.vision.SignalSleeveDetector;
 public class DumbDrive extends LinearOpMode {
 
     public static double DRIVE_SPEED = 0.2;
-    public static int SLEEP_TIME = 750;
+    public static int FORWARD_SLEEP_TIME = 750;
+    public static int STRAFE_SLEEP_TIME = 500;
 
     RobotHardware robot;
-    SignalSleeveDetector cc;
+    SignalSleeveDetector detector;
 
     @Override
     public void runOpMode() throws InterruptedException {
         robot = new RobotHardware(hardwareMap);
-        cc = new SignalSleeveDetector(hardwareMap);
+        detector = new SignalSleeveDetector(hardwareMap);
 
-        SignalSleeveDetector.PARK_ZONE a = cc.getDeterminedZone();
         waitForStart();
 
         robot.grabClaw();
         robot.sleep(500);
+        robot.drive(1, 0, 0, DRIVE_SPEED);
+        robot.sleep(FORWARD_SLEEP_TIME);
 
-        switch(a)
+        switch(detector.getDeterminedZone())
         {
             case RIGHT: {
                 robot.drive(0,1,0, DRIVE_SPEED);
+                break;
             }
             case LEFT:
             {
                 robot.drive(0,-1,0, DRIVE_SPEED);
+                break;
             }
-            case MIDDLE:{
-                robot.drive(1, 0, 0, DRIVE_SPEED);
-            }
+            case MIDDLE:
+                robot.brake();
+                return;
         }
 
-        robot.sleep(SLEEP_TIME);
+        robot.sleep(STRAFE_SLEEP_TIME);
         robot.brake();
     }
 }

@@ -31,7 +31,7 @@ public class SignalSleeveDetector {
     }
 
     public void stream() {
-        camera.startStreaming(320, 240, OpenCvCameraRotation.UPRIGHT);
+        camera.startStreaming(1280, 720, OpenCvCameraRotation.UPRIGHT);
         FtcDashboard.getInstance().startCameraStream(camera, 30);
     }
 
@@ -102,7 +102,7 @@ class SignalSleevePipeline extends OpenCvPipeline {
         double orangeValue = Core.mean(orange).val[0];
         orange.release();
 
-//        input.copyTo(out);
+        input.copyTo(out);
 
         // Determine color and draw ROI rectangle
         // TODO: Update zones for correct colors

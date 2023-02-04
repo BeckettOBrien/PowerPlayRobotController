@@ -6,17 +6,19 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.teamcode.RobotHardware;
+import org.firstinspires.ftc.teamcode.util.vision.SignalSleeveDetector;
 
 @TeleOp(name="Util", group="Iterative Opmode")
 @Config
 public class Utilities extends OpMode {
 
     private RobotHardware robot;
+    private SignalSleeveDetector detector;
 
     public static double DRIVE_SPEED_MULTIPLIER = 0.3;
     public static double TURN_SPEED_MULTIPLIER = 0.5;
 
-    public static double ARM_LIFT_POWER = 0.0;
+//    public static double ARM_LIFT_POWER = 0.0;
 
     public static double ARM_SERVO_POSITION = 0.0;
     public static double CLAW_SERVO_POSITION = 0.0;
@@ -24,6 +26,7 @@ public class Utilities extends OpMode {
     @Override
     public void init() {
         robot = new RobotHardware(hardwareMap);
+        detector = new SignalSleeveDetector(hardwareMap);
         telemetry = FtcDashboard.getInstance().getTelemetry();
     }
 
@@ -43,6 +46,7 @@ public class Utilities extends OpMode {
 //        int lowerPos = robot.armLower.getCurrentPosition();
         int raisePos = robot.armLift.getCurrentPosition();
 //        telemetry.addData("Arm Lower Encoder", lowerPos);
+        telemetry.addData("Signal Sleeve", detector.getDeterminedZone());
         telemetry.addData("Arm Lift Encoder", raisePos);
         telemetry.addData("Claw Servo", robot.clawGrab.getPosition());
         telemetry.addData("Arm Servo", robot.armRotate.getPosition());
