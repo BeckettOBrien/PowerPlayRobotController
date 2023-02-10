@@ -6,6 +6,8 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.Range;
 
+import org.firstinspires.ftc.teamcode.util.misc.Encoder;
+
 import java.util.Arrays;
 import java.util.List;
 
@@ -28,6 +30,10 @@ public class RobotHardware {
     public DcMotorEx frontLeftDrive;
     public DcMotorEx frontRightDrive;
 
+    public Encoder leftEncoder;
+    public Encoder rightEncoder;
+    public Encoder backEncoder;
+
     public DcMotorEx armLift;
 
     public Servo armRotate;
@@ -41,6 +47,10 @@ public class RobotHardware {
         frontLeftDrive = hardwareMap.get(DcMotorEx.class, "fld");
         frontRightDrive = hardwareMap.get(DcMotorEx.class, "frd");
 
+        leftEncoder = new Encoder(hardwareMap.get(DcMotorEx.class, "leftEncoder"));
+        rightEncoder = new Encoder(hardwareMap.get(DcMotorEx.class, "rightEncoder"));
+        backEncoder = new Encoder(hardwareMap.get(DcMotorEx.class, "backEncoder"));
+
         armLift = hardwareMap.get(DcMotorEx.class, "al");
 
         armRotate = hardwareMap.get(Servo.class, "ar");
@@ -51,6 +61,10 @@ public class RobotHardware {
         frontLeftDrive.setDirection(DcMotorEx.Direction.FORWARD);
         frontRightDrive.setDirection(DcMotorEx.Direction.REVERSE);
 
+        leftEncoder.setDirection(Encoder.Direction.REVERSE);
+        rightEncoder.setDirection(Encoder.Direction.REVERSE);
+        backEncoder.setDirection(Encoder.Direction.FORWARD);
+
         armLift.setDirection(DcMotorEx.Direction.REVERSE);
 
         backLeftDrive.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
@@ -60,7 +74,7 @@ public class RobotHardware {
 
         armLift.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
 
-        resetEncoders();
+//        resetEncoders();
     }
 
     public void resetEncoders() {

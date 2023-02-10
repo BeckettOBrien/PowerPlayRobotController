@@ -104,7 +104,6 @@ class SignalSleevePipeline extends OpenCvPipeline {
         input.copyTo(out);
 
         // Determine color and draw ROI rectangle
-        // TODO: Update zones for correct colors
         Scalar rectColor = new Scalar(255, 255, 255);
         double max = Math.max(Math.max(purpleValue, greenValue), orangeValue);
         if (max == purpleValue) {
