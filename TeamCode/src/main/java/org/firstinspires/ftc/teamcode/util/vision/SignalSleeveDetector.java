@@ -60,12 +60,12 @@ class SignalSleevePipeline extends OpenCvPipeline {
     double roix2 = 800;
     double roiy2 = 500;
 
-    Scalar lowPurple = new Scalar(150, 85, 125);
-    Scalar highPurple = new Scalar(175, 255, 255);
-    Scalar lowGreen = new Scalar(40, 85, 125);
-    Scalar highGreen = new Scalar(80, 255, 255);
-    Scalar lowOrange = new Scalar(10, 85, 125);
-    Scalar highOrange = new Scalar(30, 255, 255);
+    Scalar lowPurple = new Scalar(150, 50, 50);
+    Scalar highPurple = new Scalar(175, 200, 200);
+    Scalar lowGreen = new Scalar(50, 50, 100);
+    Scalar highGreen = new Scalar(75, 200, 200);
+    Scalar lowOrange = new Scalar(100, 100, 100);
+    Scalar highOrange = new Scalar(105, 255, 255);
 
     Mat mat = new Mat();
     Rect ROI;
@@ -84,12 +84,11 @@ class SignalSleevePipeline extends OpenCvPipeline {
 
         Mat out = new Mat();
 
-        Imgproc.cvtColor(input, mat, Imgproc.COLOR_RGB2HSV);
+        Imgproc.cvtColor(input, mat, Imgproc.COLOR_BGR2HSV);
 
         Mat purple = mat.submat(ROI);
         Core.inRange(mat, lowPurple, highPurple, purple);
         double purpleValue = Core.mean(purple).val[0];
-        purple.copyTo(out);
         purple.release();
 
         Mat green = mat.submat(ROI);
