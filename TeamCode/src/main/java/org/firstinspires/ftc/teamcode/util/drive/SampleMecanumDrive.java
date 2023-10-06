@@ -53,8 +53,8 @@ import static org.firstinspires.ftc.teamcode.util.drive.DriveConstants.kV;
  */
 @Config
 public class SampleMecanumDrive extends MecanumDrive {
-    public static PIDCoefficients TRANSLATIONAL_PID = new PIDCoefficients(0, 0, 0);
-    public static PIDCoefficients HEADING_PID = new PIDCoefficients(0, 0, 0);
+    public static PIDCoefficients TRANSLATIONAL_PID = new PIDCoefficients(3, 0, 0.5);
+    public static PIDCoefficients HEADING_PID = new PIDCoefficients(-4, 0, -0.5);
 
     public static double LATERAL_MULTIPLIER = 1;
 
@@ -69,6 +69,7 @@ public class SampleMecanumDrive extends MecanumDrive {
 
     private final TrajectoryFollower follower;
 
+    public RobotHardware robot;
     private final DcMotorEx leftFront;
     private final DcMotorEx leftRear;
     private final DcMotorEx rightRear;
@@ -120,7 +121,7 @@ public class SampleMecanumDrive extends MecanumDrive {
         // For example, if +Y in this diagram faces downwards, you would use AxisDirection.NEG_Y.
         // BNO055IMUUtil.remapZAxis(imu, AxisDirection.NEG_Y);
 
-        RobotHardware robot = new RobotHardware(hardwareMap);
+        robot = new RobotHardware(hardwareMap);
 
         leftFront = robot.frontLeftDrive;
         leftRear = robot.backLeftDrive;
@@ -137,6 +138,8 @@ public class SampleMecanumDrive extends MecanumDrive {
 
         if (RUN_USING_ENCODER) {
             setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        } else {
+            setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         }
 
         setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);

@@ -52,6 +52,6 @@ public class OneControllerTeleop extends OpMode {
 //        telemetry.update();
 //
 //        robot.setArmHeight(armPercentage);
-        robot.armPower(gamepad1.right_trigger - gamepad1.left_trigger);
+        robot.setLift(gamepad1.right_trigger - gamepad1.left_trigger);
     }
 }

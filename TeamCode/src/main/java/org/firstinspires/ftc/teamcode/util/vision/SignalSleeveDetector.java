@@ -55,9 +55,9 @@ class SignalSleevePipeline extends OpenCvPipeline {
 
     public SignalSleeveDetector.PARK_ZONE currentZone;
 
-    double roix1 = 500;
+    double roix1 = 800;
     double roiy1 = 200;
-    double roix2 = 800;
+    double roix2 = 1050;
     double roiy2 = 500;
 
     Scalar lowPurple = new Scalar(150, 50, 50);
@@ -107,13 +107,13 @@ class SignalSleevePipeline extends OpenCvPipeline {
         Scalar rectColor = new Scalar(255, 255, 255);
         double max = Math.max(Math.max(purpleValue, greenValue), orangeValue);
         if (max == purpleValue) {
-            currentZone = SignalSleeveDetector.PARK_ZONE.LEFT;
+            currentZone = SignalSleeveDetector.PARK_ZONE.RIGHT;
             rectColor = new Scalar(255, 0, 255);
         } else if (max == greenValue) {
             currentZone = SignalSleeveDetector.PARK_ZONE.MIDDLE;
             rectColor = new Scalar(0, 255, 0);
         } else if (max == orangeValue) {
-            currentZone = SignalSleeveDetector.PARK_ZONE.RIGHT;
+            currentZone = SignalSleeveDetector.PARK_ZONE.LEFT;
             rectColor = new Scalar(255, 150, 0);
         }
         Imgproc.rectangle(out, ROI, rectColor);

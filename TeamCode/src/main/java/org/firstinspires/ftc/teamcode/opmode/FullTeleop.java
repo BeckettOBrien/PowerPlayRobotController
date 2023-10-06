@@ -3,7 +3,6 @@ package org.firstinspires.ftc.teamcode.opmode;
 import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.util.Range;
 
 import org.firstinspires.ftc.teamcode.RobotHardware;
 
@@ -11,9 +10,9 @@ import org.firstinspires.ftc.teamcode.RobotHardware;
 @TeleOp(name="Full Teleop", group="Iterative Opmode")
 public class FullTeleop extends OpMode {
 
-    public static double DRIVE_SPEED_MULTIPLIER = 0.3;
-    public static double TURN_SPEED_MULTIPLIER = 0.5;
-    public static double RAISE_ARM_MULTIPLIER = 0.5;
+    public static double DRIVE_SPEED_MULTIPLIER = 0.4;
+    public static double TURN_SPEED_MULTIPLIER = 0.85;
+    public static double RAISE_ARM_MULTIPLIER = 0.55;
 
     private RobotHardware robot;
 
@@ -39,10 +38,10 @@ public class FullTeleop extends OpMode {
             robot.releaseClaw();
         }
 
-        if (gamepad2.left_bumper) {
+        if (gamepad2.left_bumper || gamepad2.dpad_left) {
             robot.rotateArm(RobotHardware.ARM_FORWARD);
         }
-        if (gamepad2.right_bumper) {
+        if (gamepad2.right_bumper || gamepad2.dpad_right) {
             robot.rotateArm(RobotHardware.ARM_BACKWARD);
         }
 
@@ -53,6 +52,6 @@ public class FullTeleop extends OpMode {
 //        telemetry.update();
 //
 //        robot.setArmHeight(armPercentage);
-        robot.armPower((gamepad2.right_trigger - gamepad2.left_trigger) * RAISE_ARM_MULTIPLIER);
+        robot.setLift((gamepad2.right_trigger - gamepad2.left_trigger) * RAISE_ARM_MULTIPLIER);
     }
 }

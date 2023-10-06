@@ -36,10 +36,15 @@ public class Utilities extends OpMode {
         double rotate = gamepad1.right_stick_x;
 
         robot.drive(drive, strafe, rotate * TURN_SPEED_MULTIPLIER, (gamepad1.x ? 1 : DRIVE_SPEED_MULTIPLIER));
-        robot.armPower(gamepad1.right_trigger - gamepad1.left_trigger);
+//        robot.updateLift();
+//        robot.liftPower(gamepad1.right_trigger - gamepad1.left_trigger);
+        robot.setLift(gamepad1.right_trigger - gamepad1.left_trigger);
 
-        robot.rotateArm(ARM_SERVO_POSITION);
-        robot.clawGrab.setPosition(CLAW_SERVO_POSITION);
+//        if (gamepad1.a) {
+//            robot.rotateArm(ARM_SERVO_POSITION);
+        robot.armRotate.setPosition(ARM_SERVO_POSITION);
+            robot.clawGrab.setPosition(CLAW_SERVO_POSITION);
+//        }
 
         sendInfo();
     }
@@ -53,6 +58,7 @@ public class Utilities extends OpMode {
         telemetry.addData("Left Encoder", robot.leftEncoder.getCurrentPosition());
         telemetry.addData("Right Encoder", robot.rightEncoder.getCurrentPosition());
         telemetry.addData("Back Encoder", robot.backEncoder.getCurrentPosition());
+        telemetry.addData("Arm Limit Switch", robot.armLimit.getState());
         telemetry.update();
     }
 }
